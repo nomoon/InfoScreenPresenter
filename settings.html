@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Info Screen Presenter - Settings</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'">
+</head>
+<body>
+  <h1>Settings</h1>
+  <form id="settings">
+    <p>
+      <label for="slide-url">
+        <strong>Google Slides link URL or embed code: </strong><br />
+        <textarea id="slide-url" rows="6" cols="80" required></textarea><br />
+        <small><em>
+          From the Google Slides "Publish to the Web" menu, paste the provided code from either the "Link" or "Embed" tab here.<br />
+          The proper URL will be extracted and used, and all options embedded in the above code will be ignored.
+        </em></small>
+      </label>
+    </p>
+
+    <p>
+      <label for="slide-delay">
+        <strong># of seconds to show each slide: </strong><br />
+        <input id="slide-delay" type="number" min="1" max="120" required />
+      </label>
+    </p>
+
+    <p>
+      <label for="refresh-minutes">
+        <strong># of minutes to refresh the slide show after: </strong><br />
+        <input id="refresh-minutes" type="number" min="1" max="120" required /><br />
+        <small><em>Note: This will also restart the slide show from the beginning.</em></small>
+      </label>
+    </p>
+
+    <p>
+      <input type="submit" value="Save Changes & Restart Slideshow" />
+    </p>
+  </form>
+  <script>
+    const slideURLField = document.getElementById('slide-url');
+    slideURLField.value = localStorage.getItem('slideURL');
+    slideURLField.addEventListener('input', (event) => {
+      slideURLField.setCustomValidity(slideURLField.value.match(/(https:\/\/docs\.google\.com\/.*?\/pub)/) ? "" : "Could not extract URL.");
+    });
+
+    const slideDelayField = document.getElementById('slide-delay');
+    slideDelayField.value = localStorage.getItem('slideDelay') ?? 20;
+
+    const refreshMinutesField = document.getElementById('refresh-minutes');
+    refreshMinutesField.value = localStorage.getItem('refreshMinutes') ?? 10;
+
+    const form = document.getElementById('settings');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      slideURLField.value = slideURLField.value.trim();
+
+      if (form.checkValidity()) {
+        localStorage.setItem('slideURL', slideURLField.value);
+        localStorage.setItem('slideDelay', slideDelayField.value);
+        localStorage.setItem('refreshMinutes', refreshMinutesField.value);
+        window.location.href = "index.html";
+      }
+      else {
+        form.reportValidity();
+      }
+    })
+  </script>
+</body>
+</html>

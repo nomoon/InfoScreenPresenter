@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Info Screen Presenter</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://*.google.com https://*.gstatic.com https://*.withgoogle.com">
+  <style>
+    html,
+    body {
+      background: black;
+      padding: 0;
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      user-select: none;
+    }
+
+    .container {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    .container iframe {
+      height: calc(100vh + 36px);
+      width: 100vw !important;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <iframe id="presentFrame" src=""
+      frameborder="0" width="100%" height="100%" tabindex="-1"
+      allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" ></iframe>
+  </div>
+  <script>
+    const refreshMinutes = localStorage.getItem('refreshMinutes') ?? 0;
+    const slideDelay = localStorage.getItem('slideDelay') ?? 0;
+    const slideEmbedURL = localStorage.getItem('slideURL')?.match(/(https:\/\/docs\.google\.com\/.*?\/pub)/)?.[1];
+
+    if (refreshMinutes <= 0 || slideDelay <= 0 || slideEmbedURL == null) {
+      window.location.href = "settings.html";
+    } else {
+      const iframe = document.getElementById('presentFrame');
+
+      function refreshFrame() {
+        console.log(`Refreshing ${slideEmbedURL} at ${slideDelay}s per slide, refreshing every ${refreshMinutes}m.`);
+        const iframeURL = iframe.src;
+        iframe.src = iframeURL;
+      }
+      setInterval(refreshFrame, Math.round(refreshMinutes * 60 * 1000));
+
+      iframe.src = `${slideEmbedURL}embed?start=true&loop=true&delayms=${Math.round(slideDelay * 1000)}`;
+      console.log(`Showing ${slideEmbedURL} at ${slideDelay}s per slide, refreshing every ${refreshMinutes}m.`);
+    }
+  </script>
+</body>
+</html>
