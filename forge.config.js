@@ -32,10 +32,12 @@ export default {
     {
       name: '@electron-forge/publisher-github',
       config: {
+        draft: false,
+        generateReleaseNotes: true,
+        prerelease: false,
         repository: {
           owner: 'nomoon',
           name: 'InfoScreenPresenter',
-          generateReleaseNotes: true
         },
       }
     }
