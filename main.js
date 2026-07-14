@@ -1,10 +1,5 @@
-// Don't auto-start app during installation or uninstall
-if (require('electron-squirrel-startup')) {
-  app.quit();
-}
-
-const { app, globalShortcut, shell, Menu, BrowserWindow } = require('electron');
-const path = require('node:path');
+import { app, globalShortcut, shell, Menu, BrowserWindow } from 'electron';
+import path from 'node:path';
 
 const template = [
   ...(process.platform === 'darwin' ? [{ role: 'appMenu' }] : []),
@@ -55,9 +50,9 @@ app.whenReady().then(() => {
   });
 
   globalShortcut.register('Escape', () => {
-        const focusedWindow = BrowserWindow.getFocusedWindow();
-        if (focusedWindow && focusedWindow.isFullScreen()) focusedWindow.setFullScreen(false);
-    });
+      const focusedWindow = BrowserWindow.getFocusedWindow();
+      if (focusedWindow && focusedWindow.isFullScreen()) focusedWindow.setFullScreen(false);
+  });
 })
 
 app.on('window-all-closed', function () {

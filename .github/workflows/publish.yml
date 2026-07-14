@@ -1,0 +1,21 @@
+name: Publish Release
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v7
+      - name: Setup node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm ci
+      - name: Publish App
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run publish

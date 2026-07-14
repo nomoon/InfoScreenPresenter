@@ -1,30 +1,14 @@
-const { FusesPlugin } = require('@electron-forge/plugin-fuses');
-const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+import { FusesPlugin } from '@electron-forge/plugin-fuses';
+import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
-module.exports = {
+export default {
   packagerConfig: {
     asar: true,
   },
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-squirrel',
-      config: {
-        createDesktopShortcut: true,
-        createStartMenuShortcut: true,
-      },
-    },
-    {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
-    },
-    {
-      name: '@electron-forge/maker-deb',
-      config: {},
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {},
     },
   ],
   plugins: [
@@ -44,4 +28,16 @@ module.exports = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'nomoon',
+          name: 'InfoScreenPresenter',
+          generateReleaseNotes: true
+        },
+      }
+    }
+  ]
 };
