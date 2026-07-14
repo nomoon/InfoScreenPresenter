@@ -5,7 +5,7 @@
   "keywords": [],
   "main": "./main.js",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "repository": "github:nomoon/InfoScreenPresenter",
   "scripts": {
@@ -15,15 +15,15 @@
     "publish": "electron-forge publish"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.11.2",
-    "@electron-forge/maker-zip": "^7.11.2",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.11.2",
-    "@electron-forge/plugin-fuses": "^7.11.2",
-    "@electron-forge/publisher-github": "^7.11.2",
-    "@electron/fuses": "^1.8.0",
-    "electron": "41.1.1"
+    "@electron-forge/cli": "^8.0.0-alpha.10",
+    "@electron-forge/maker-zip": "^8.0.0-alpha.10",
+    "@electron-forge/plugin-auto-unpack-natives": "^8.0.0-alpha.10",
+    "@electron-forge/plugin-fuses": "^8.0.0-alpha.10",
+    "@electron-forge/publisher-github": "^8.0.0-alpha.10",
+    "@electron/fuses": "^2.0.0",
+    "electron": "43.1.1"
   },
   "allowScripts": {
-    "electron@41.1.1": true
+    "electron@43.1.1": true
   }
 }
