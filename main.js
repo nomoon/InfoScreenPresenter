@@ -35,11 +35,16 @@ function createWindow () {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    backgroundColor: 'black',
+    show: false,
   });
   mainWindow.on('page-title-updated', (event) => event.preventDefault());
   mainWindow.title = `InfoScreen Presenter ${app.getVersion()}`;
-  mainWindow.maximize();
   mainWindow.loadFile('index.html');
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.maximize();
+    mainWindow.show();
+  });
 }
 
 app.whenReady().then(() => {

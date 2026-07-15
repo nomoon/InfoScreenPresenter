@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Info Screen Presenter</title>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://*.google.com https://*.gstatic.com https://*.withgoogle.com">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; frame-src https://docs.google.com">
   <style>
     html,
     body {
@@ -42,16 +42,17 @@
       window.location.href = "settings.html";
     } else {
       const iframe = document.getElementById('presentFrame');
+      const iframeURL = new URL(slideEmbedURL + "embed");
+      iframeURL.searchParams.set('start', 'true');
+      iframeURL.searchParams.set('loop', 'true');
+      iframeURL.searchParams.set('delayms', Math.round(slideDelay * 1000));
 
       function refreshFrame() {
         console.log(`Refreshing ${slideEmbedURL} at ${slideDelay}s per slide, refreshing every ${refreshMinutes}m.`);
-        const iframeURL = iframe.src;
-        iframe.src = iframeURL;
+        iframe.setAttribute('src', iframeURL);
       }
       setInterval(refreshFrame, Math.round(refreshMinutes * 60 * 1000));
-
-      iframe.src = `${slideEmbedURL}embed?start=true&loop=true&delayms=${Math.round(slideDelay * 1000)}`;
-      console.log(`Showing ${slideEmbedURL} at ${slideDelay}s per slide, refreshing every ${refreshMinutes}m.`);
+      refreshFrame();
     }
   </script>
 </body>
